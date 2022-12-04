@@ -1,0 +1,23 @@
+{
+    "development": {
+        "username": "HoaAndy",
+        "password": "",
+        "database": "dbthitracnghiem",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "test": {
+        "username": "HoaAndy",
+        "password": null,
+        "database": "dbthitracnghiem",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    },
+    "production": {
+        "username": "HoaAndy",
+        "password": null,
+        "database": "dbthitracnghiem",
+        "host": "127.0.0.1",
+        "dialect": "mysql"
+    }
+}

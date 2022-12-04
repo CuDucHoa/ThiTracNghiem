@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+</head>
+
+<body>
+    <form method="post" action="/login">
+        <h2 style="text-align: center">TRƯỜNG TH TAM PHÚ</h2>
+        <h4 style="text-align: center">Trang web thi trắc nghiệm</h4>
+        <div class="mydiv center-block">
+            <%if(checkPass === 1){%>
+                <div>
+                    <p style="color:red;">Sai tài khoản hoặc mật khẩu</p>
+                </div>
+                <%}%>
+                    <p><strong>Tên tài khoản: </strong></p>
+                    <p>
+                        <input type="text" id="userId" name="userId" class="form-control" style="width: 100%; max-width: 100%" placeholder="Nhập tên tài khoản ..." autofocus maxlength="10" required />
+                    </p>
+                    <p><strong>Mật khẩu: </strong></p>
+                    <p>
+                        <input type="password" name="password" id="password" class="form-control pull-left" style="width: 100%; max-width: 100%" placeholder="Nhập mật khẩu ..." maxlength="20" required />
+                    </p>
+                    <script>
+                        function myFunction() {
+                            var x = document.getElementById('password');
+                            if (x.type == 'password') {
+                                x.type = 'text';
+                                document.getElementById('show').innerHTML =
+                                    'Ẩn mật khẩu';
+                            } else {
+                                x.type = 'password';
+                                document.getElementById('show').innerHTML =
+                                    'Hiện mật khẩu';
+                            }
+                        }
+                    </script>
+                    <br />
+                    <br />
+                    <p class="checkbox-inline">
+                        <input type="checkbox" onclick="myFunction()" name="show-password" id="show-password" /><label for="show-password" id="show">Hiện mật khẩu</label>
+                    </p>
+                    <br />
+                    <br />
+                    <input type="submit" value="Đăng nhập" class="btn btn-primary" style="width: 100%; max-width: 100%" />
+                    <br />
+                    <br />
+                    <p>
+                        <a href="./send-mail" class="form-control" style="
+                            text-align: center;
+                            text-decoration: none;
+                            border-radius: 16px;
+                        ">Quên mật khẩu</a>
+                    </p>
+        </div>
+    </form>
+</body>
+
+</html>

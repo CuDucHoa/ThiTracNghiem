@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  	<link rel="stylesheet" th:href="@{css/bootstrap.css}">
+  	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Change Question Information</title>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.ngubar {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.ngubar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.ngu {
+  float: left;
+  overflow: hidden;
+}
+
+.ngu .ngubtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.ngubar a:hover, .ngu:hover .ngubtn {
+  background-color: #ddd;
+  color: black;
+}
+
+.ngu-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.ngu-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.ngu-content a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.ngu:hover .ngu-content {
+  display: block;
+}
+.footer {
+   position: fixed;
+   bottom:0;
+   width: 100%;
+   background-color: #333;
+   color: white;
+   text-align: left;
+}
+.avatar {
+  vertical-align: middle;
+  width: 250px;
+  height: 250px;
+  margin-left: 24%;
+  margin-top:12%;
+  border-radius: 50%;
+}
+</style>
+</head>
+<body>
+<div class="ngubar">
+  <a th:href="@{/home}" style="font-weight:bold;background-color:#1e90ff;">Tam Phú</a>
+  <div class="ngu" th:if="${userRole == 'admin'}">
+    	<button class="ngubtn"><i class="fa fa-users" aria-hidden="true"></i> Quản lý tài khoản
+      		<i class="fa fa-caret-down"></i>
+    	</button>
+    	<div class="ngu-content">
+      		<a th:href="@{/account-list?userRole=teacher&order=null}">Giáo viên</a>
+       		<a th:href="@{/account-list?userRole=student&order=null}">Học sinh</a>
+    	</div>
+  </div>
+  <a th:href="@{/account-list?userRole=teacher&order=null}" th:if="${userRole == 'teacher'}"><i class="fa fa-users" aria-hidden="true"></i> Quản lý học sinh</a>
+  <a th:href="@{/test-list?order=null}" th:if="${userRole == 'admin'}"><i class="fa fa-list-ul" aria-hidden="true" style="color:white;"></i> Quản lý bài kiểm tra</a>
+  <div class="ngu">
+    <button class="ngubtn" style="background-color:#04AA6D;">Quản lý câu hỏi
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="ngu-content">
+      <a th:href="@{/question-list(subjectId=${list.subjectId})}" th:each="list : ${listSubject}" th:text="${list.subjectName}"></a>
+    </div>
+  </div>
+   <div class="ngu" th:if="${userRole == 'admin'}">
+    <button class="ngubtn">Khác
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="ngu-content">
+      <a th:href="@{/class-list}">Danh sách lớp học</a>
+       <a th:href="@{/subject-list}">Danh sách môn học</a>
+    </div>
+  </div>
+  <a href="#" data-toggle="modal" data-target="#logout" class="pull-right"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+  <a href="" th:text="${userName}" class="pull-right"  th:if="${userRole == 'admin'}"></a> 
+  <a th:href="@{/account-information}" th:text="${userName}" class="pull-right"  th:if="${userRole == 'teacher'}"></a> 
+</div>
+    <form method="post" th:action="@{/change-question-information}">
+    	<div class="row">
+        	<div class="mydiv" style="float:left;width: 40%;max-width: 40%;margin-left:20%;">
+   				<p><input type="hidden" name="questionId" id="questionId" th:value="${questionId}" class="form-control center-block" style="width:100%;max-width:100%;" maxlength = "20"></p>
+            	<p><strong>Nội dung câu hỏi : </strong></p>
+   				<p><input type="text" name="questionContent" id="questionContent" th:value="${questionContent}" class="form-control center-block" style="width:100%;max-width:100%;"  placeholder="Nhập nội dung câu hỏi ..." maxlength = "100" th:if="${isMe == true}" required></p>
+        		<p><input type="text" name="questionContent" id="questionContent" th:value="${questionContent}" class="form-control center-block" style="width:100%;max-width:100%;"  placeholder="Nhập nội dung câu hỏi ..." maxlength = "100" th:if="${isMe == false}" readonly required></p>
+        		<p><strong>Đáp án 1 : </strong></p> 
+   				<p><input type="text" name="answerOne" id="answerOne" th:value="${answerOne}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 1 ..." maxlength = "50" th:if="${isMe == true}" required>  
+   				<p><input type="text" name="answerOne" id="answerOne" th:value="${answerOne}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 1 ..." maxlength = "50" th:if="${isMe == false}" readonly required> 
+   				<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerOne" class="pull-left" th:if="${answerCorrect != 'answerOne'}">
+            	<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerOne" class="pull-left" checked th:if="${answerCorrect == 'answerOne'}"></p>
+            	<br><br><p><strong>Đáp án 2 : </strong></p>
+            	<p><input type="text" name="answerTwo" id="answerTwo" th:value="${answerTwo}" class="form-control pull-left " style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 2 ..." maxlength = "50" th:if="${isMe == true}" required>
+            	<p><input type="text" name="answerTwo" id="answerTwo" th:value="${answerTwo}" class="form-control pull-left " style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 2 ..." maxlength = "50" th:if="${isMe == false}" readonly required>
+            	 <input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerTwo" class="pull-left"  th:if="${answerCorrect != 'answerTwo'}">
+            	 <input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerTwo" class="pull-left" checked  th:if="${answerCorrect == 'answerTwo'}"></p>
+            	<br><br><p><strong>Đáp án 3 : </strong></p>
+   				<p><input type="text" name="answerThree" id="answerThree" th:value="${answerThree}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 3 ..." maxlength = "50" th:if="${isMe == true}"> 
+   				<p><input type="text" name="answerThree" id="answerThree" th:value="${answerThree}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 3 ..." maxlength = "50" th:if="${isMe == false}" readonly> 
+   				<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerThree" class="pull-left" th:if="${answerCorrect != 'answerThree'}">
+   				<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerThree" class="pull-left"  checked  th:if="${answerCorrect == 'answerThree'}"></p>
+            	<br><br><p><strong>Đáp án 4 : </strong></p>
+   				<p><input type="text" name="answerFour" id="answerFour" th:value="${answerFour}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 4 ..." maxlength = "50" th:if="${isMe == true}"> 
+   				<p><input type="text" name="answerFour" id="answerFour" th:value="${answerFour}" class="form-control pull-left" style="width:50%;max-width:50%;"  placeholder="Nhập đáp án 4 ..." maxlength = "50" th:if="${isMe == false}" readonly> 
+   				<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerFour" class="pull-left" th:if="${answerCorrect != 'answerFour'}">
+   				<input type="radio" id="answerCorrect" name="answerCorrect" style="width:10%;max-width:10%;"  value="answerFour" class="pull-left"  checked  th:if="${answerCorrect == 'answerFour'}"></p>
+        	</div>
+        	<div class="mydiv" style="float:left;width:30%;max-width: 30%;margin-left:20px;">
+            	<p><strong>Khối lớp : </strong></p>
+            		<p><select  class="form-control center-block" style="width:100%;max-width:100%;"  id="questionGrade" name="questionGrade" th:if="${isMe == true}"  required>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" th:text="${questionGrade}" th:value="${questionGrade}"></option>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" value="1">1</option>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" value="2">2</option>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" value="3">3</option>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" value="4">4</option>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" value="5">5</option>
+            		</select></p>
+            		<p><select  class="form-control center-block" style="width:100%;max-width:100%;"  id="questionGrade" name="questionGrade" th:if="${isMe == false}"  readonly required>
+            			<option for="questionGrade" id="questionGrade" name="questionGrade" th:text="${questionGrade}" th:value="${questionGrade}"></option>
+            		</select></p>
+            		<p><strong>Học kỳ : </strong></p>
+   					<p><select id="questionTerm" name="questionTerm" class="form-control center-block" style="width:100%;max-width:100%;" th:if="${isMe == true}" required>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" th:text="${questionTerm}" th:value="${questionTerm}"></option>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" value="Giữa học kỳ 1">Giữa học kỳ 1</option>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" value="Cuối học kỳ 1">Cuối học kỳ 1</option>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" value="Giữa học kỳ 2">Giữa học kỳ 2</option>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" value="Cuối học kỳ 2">Cuối học kỳ 2</option>
+            		</select></p>
+   					<p><select id="questionTerm" name="questionTerm" class="form-control center-block" style="width:100%;max-width:100%;" th:if="${isMe == false}" readonly required>
+                		<option for="questionTerm" id="questionTerm" name="questionTerm" th:text="${questionTerm}" th:value="${questionTerm}"></option>
+            		</select></p>
+            		<p><strong>Môn : </strong></p>
+            		<p><select  class="form-control center-block" style="width:100%;max-width:100%;"  id="subjectId" name="subjectId" th:if="${isMe == true}"  required>
+            			<option for="subjectId" id="subjectId" name="subjectId" th:value="${subjectId}" th:text="${subjectName}"></option>
+            			<option for="subjectId" id="subjectId" name="subjectId" th:each="list : ${listSubject}" th:value="${list.subjectId}" th:text="${list.subjectName}"></option>
+            		</select></p>
+            		<p><select  class="form-control center-block" style="width:100%;max-width:100%;"  id="subjectId" name="subjectId" th:if="${isMe == false}"  readonly required>
+            			<option for="subjectId" id="subjectId" name="subjectId" th:value="${subjectId}" th:text="${subjectName}"></option>
+            		</select></p>
+            		<p><strong>Người tạo : </strong></p>
+   					<p><input type="text" name="createby" th:value="${createby}" id="createby" class="form-control center-block" style="width:100%;max-width:100%;"  maxlength = "35" readonly></p>
+   					<p><strong>Trạng thái : </strong></p>
+   					<p >
+   					<select  class="form-control center-block" style="width:100%;max-width:100%;"  id="questionState" name="questionState" th:if="${userRole == 'teacher'}" readonly>
+            			<option for="questionState" id="questionState" name="questionState" th:value="${questionState}" th:if="${questionState == true}">Đã duyệt </option>
+            			<option for="questionState" id="questionState" name="questionState" th:value="${questionState}" th:if="${questionState == false}">Chưa duyệt</option>
+            		</select>
+            		</p>
+            		<p >
+   					<select  class="form-control center-block" style="width:100%;max-width:100%;"  id="questionState" name="questionState" th:if="${userRole == 'admin'}">
+            			<option for="questionState" id="questionState" name="questionState" th:value="${questionState}" th:if="${questionState == true}">Đã duyệt </option>
+            			<option for="questionState" id="questionState" name="questionState" th:value="${questionState}" th:if="${questionState == false}">Chưa duyệt</option>
+            			<option for="questionState" id="questionState" name="questionState" th:value= "true">Đã duyệt</option>
+            			<option for="questionState" id="questionState" name="questionState" th:value="false">Chưa duyệt</option>
+            		</select>
+            		</p>
+            	<br>
+            	<p th:if="${isMe == true}">
+   					<input type="submit"  value="Lưu thay đổi" class="btn btn-success center-block" style="width: 100%;max-width:100%;border-radius: 16px;"/>
+            	</p>
+            	<p th:if="${userRole == 'admin'}">
+   					<input type="submit"  value="Lưu thay đổi" class="btn btn-success center-block" style="width: 100%;max-width:100%;border-radius: 16px;"/>
+            	</p>
+        	</div>
+        	
+      
+    <br>
+    </form>
+ <div class="footer center-block">
+  <p style="padding:5px;">Bản quyền của <span style="color:#3276b1;">Trường THPT Tam Phú</span> – Phát triển bởi <span style="color:#3276b1;">NTT&CDH</span>  © 2022 - 2022 <span class="pull-right" style="color:green;">Version 0.0.1 </span></p>
+</div>
+<div class="modal fade" id="logout" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="form-group">
+                    <h3 class="modal-title">Đăng xuất<button type="button" class="close pull-right" data-dismiss="modal">&times;</button></h3>
+                </div>
+            </div>
+            <div>
+            	<br>
+				<p style="text-align:center;">Bạn có chắc là muốn đăng xuất ?</p>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <p>
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Không</a>
+                        <a th:href="@{/logout}" class="btn btn-danger" style="padding-left:23px;padding-right:23px;">Có</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

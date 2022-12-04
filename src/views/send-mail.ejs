@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Change Password</title>
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+
+<body>
+    <div style="
+                color: #000 !important;
+                background-color: #ddffff !important;
+                margin-top: 0%;
+                padding-top: 0%;
+                border-left: 6px solid !important;
+                border-color: #2196f3 !important;
+            ">
+        <br />
+        <h4 style="padding-left: 1%">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Chức năng này chỉ dành cho giáo viên
+        </h4>
+        <br />
+    </div>
+    <div class="mydiv center-block">
+        <form method="post" action="/send-mail">
+            <%if(param === 1){%>
+                <div>
+                    <p style="color: red">Sai thông tin</p>
+                </div>
+                <%}%>
+                    <p><strong>Tên tài khoản : </strong></p>
+                    <p>
+                        <input type="text" name="userId" id="userId" for="userId" class="form-control" style="width: 100%; max-width: 100%" placeholder="Nhập tên tài khoản ..." autofocus maxlength="10" required />
+                    </p>
+                    <p><strong>Gmail : </strong></p>
+                    <p>
+                        <input type="text" name="gmail" id="gmail" for="gmail" class="form-control pull-left" style="width: 75%; max-width: 75%" placeholder="Nhập gmail ..." maxlength="30" required /><input type="submit" value="Gửi mã" class="btn btn-signup pull-right"
+                            style="
+                            width: 20%;
+                            max-width: 20%;
+                            border-radius: 6px;
+                            text-align: center;
+                        " />
+                    </p>
+        </form>
+        <br />
+        <br />
+        <br />
+        <form method="post" action="/change-password">
+            <p><strong>Nhập mã xác nhận : </strong></p>
+            <p>
+                <input type="text" name="code" id="code" class="form-control pull-left" style="width: 65%; max-width: 65%" placeholder="Nhập code ..." maxlength="6" required /><input type="submit" value="Xác nhận" class="btn btn-info pull-right" style="
+                            width: 30%;
+                            max-width: 30%;
+                            border-radius: 6px;
+                            text-align: center;
+                        " />
+            </p>
+        </form>
+        <br />
+        <br />
+        <br />
+        <p>
+            <a href="/login" class="form-control" style="
+                        text-align: center;
+                        text-decoration: none;
+                        border-radius: 16px;
+                    "><i class="fa fa-undo" aria-hidden="true"></i> Trở về</a>
+        </p>
+    </div>
+</body>
+
+</html>
