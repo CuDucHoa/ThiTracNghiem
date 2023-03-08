@@ -3,17 +3,17 @@ const jwt = require('jsonwebtoken');
 
 class LoginPageController {
     get(req, res, next) {
-        if (req.cookies.token !== null || req.cookies !== undefined) {
+        if (req.cookies.token !== undefined) {
             res.status(200).redirect('/home');
         } else res.render('login', { checkPass: 0 });
     }
     async login(req, res, next) {
-        var userId = req.body.userId;
+        var user_id = req.body.user_id;
         var password = req.body.password;
         try {
             const Login = await db.nguoidung.findOne({
                 where: {
-                    nguoidung_id: userId,
+                    nguoidung_id: user_id,
                     nguoidung_password: password,
                     nguoidung_state: '1'
                 }
@@ -37,9 +37,9 @@ class LoginPageController {
             const token = req.cookies.token;
             jwt.verify(token, 'SECRETKEY', function(error, payload) {
                 if (error) {
-                    res.status(200).redirect('/login');
+                    // res.status(200).redirect('/login');
+                    res.json('token cookies:' + token + ' Error: ' + error);
                 } else {
-                    // find
                     db.nguoidung.findOne({
                         where: {
                             nguoidung_id: payload.nguoidungId
@@ -72,6 +72,7 @@ class LoginPageController {
     }
     logout(req, res, next) {
         res.clearCookie('token');
+        res.clearCookie('data');
         res.status(200).redirect('/login');
     }
 }

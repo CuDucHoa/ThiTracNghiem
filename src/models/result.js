@@ -11,21 +11,19 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsTo(models.nguoidung);
+            this.belongsTo(models.test);
         }
     }
     result.init({
-        nguoidung_id: {
+        result_id: {
             allowNull: false,
             primaryKey: true,
-            type: DataTypes.STRING
-        },
-        test_id: {
-            allowNull: false,
-            primaryKey: true,
+            autoIncrement: true,
             type: DataTypes.BIGINT
         },
         users_score: DataTypes.FLOAT,
-        test_state: DataTypes.BOOLEAN,
+        test_state: DataTypes.TINYINT,
         test_finish_time: DataTypes.DATE
     }, {
         sequelize,

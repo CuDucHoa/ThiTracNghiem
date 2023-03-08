@@ -3,14 +3,10 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('test_detail', {
-            test_id: {
+            test_detail_id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.BIGINT
-            },
-            question_id: {
-                allowNull: false,
-                primaryKey: true,
+                autoIncrement: true,
                 type: Sequelize.BIGINT
             }
         });

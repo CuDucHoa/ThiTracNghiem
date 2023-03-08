@@ -1,199 +1,150 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" th:href="@{css/bootstrap.css}" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <title>Do Test</title>
-        <style>
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-                font-size: 16px;
-                background-color: #fdf5e6;
-            }
 
-            .ngubar {
-                overflow: hidden;
-                background-color: #333;
-            }
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Do Test</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            background-color: #fdf5e6;
+        }
+        
+        .ngubar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .ngubar a {
+            float: left;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        .ngu {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .ngu .ngubtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .ngubar a:hover,
+        .ngu:hover .ngubtn {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .ngu-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .ngu-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .ngu-content a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .ngu:hover .ngu-content {
+            display: block;
+        }
+        
+        .footer {
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: left;
+        }
+    </style>
+</head>
 
-            .ngubar a {
-                float: left;
-                font-size: 16px;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
-
-            .ngu {
-                float: left;
-                overflow: hidden;
-            }
-
-            .ngu .ngubtn {
-                font-size: 16px;
-                border: none;
-                outline: none;
-                color: white;
-                padding: 14px 16px;
-                background-color: inherit;
-                font-family: inherit;
-                margin: 0;
-            }
-
-            .ngubar a:hover,
-            .ngu:hover .ngubtn {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .ngu-content {
-                display: none;
-                position: absolute;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                z-index: 1;
-            }
-
-            .ngu-content a {
-                float: none;
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                text-align: left;
-            }
-
-            .ngu-content a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .ngu:hover .ngu-content {
-                display: block;
-            }
-            .footer {
-                bottom: 0;
-                width: 100%;
-                background-color: #333;
-                color: white;
-                text-align: left;
-            }
-        </style>
-    </head>
-    <body>
-        <form method="post" th:action="@{/do-test}" name="dotest">
-            <div class="row">
-                <input
-                    type="text"
-                    id="testTimeLimit"
-                    placeholder="Thời gian giới hạn"
-                    th:value="${testTimeLimit}"
-                    hidden
-                />
-                <div
-                    class="mydiv pull-left"
-                    style="
+<body>
+    <form method="post" action="/do-test" name="dotest">
+        <div class="row">
+            <input type="text" id="test_id" name="test_id" placeholder="Bài test" value="<%=test.test_id%>" hidden />
+            <input type="text" id="test_time_limit" placeholder="Thời gian giới hạn" value="<%=test.test_time_limit%>" hidden />
+            <div class="mydiv pull-left" style="
                         width: 15%;
                         max-width: 15%;
                         position: fixed;
                         margin-left: 2%;
                         margin-top: 0%;
                         background-color: white;
-                    "
-                >
-                    <p>Mã số học sinh : <label th:text="${userId}"></label></p>
-                    <p>Họ và tên : <label th:text="${userName}"></label></p>
-                    <p>Lớp : <label th:text="${className}"></label></p>
-                </div>
-
-                <div
-                    class="mydiv pull-left"
-                    style="
+                    ">
+                <p>Mã số học sinh : <label text="<%=user_data.nguoidung_id%>"><%=user_data.nguoidung_id%></label></p>
+                <p>Họ và tên : <label text="<%=user_data.nguoidung_full_name%>"><%=user_data.nguoidung_full_name%></label></p>
+                <p>Lớp : <label text="<%=user_data.class_name%>"><%=user_data.class_name%></label></p>
+            </div>
+            <%for(var i = 0; i<list_question.length;i++){%>
+                <div class="mydiv pull-left" style="
                         width: 50%;
                         max-width: 50%;
                         margin-left: 19%;
                         margin-top: 2%;
-                        background-color: white;
-                    "
-                    th:each="list,state : ${listQuestion}"
-                >
+                        background-color: white;">
                     <p>
-                        <label
-                            >Câu <span th:text="${state.count}"></span> :
+                        <label>Câu <span text="<%=i+1%>"><%=i+1%></span> :
                         </label>
-                        <span th:text="${list.questionContent}"></span>
+                        <span text="<%=list_question[i].question_content%>"><%=list_question[i].question_content%></span>
                     </p>
                     <hr />
-                    <input
-                        type="radio"
-                        th:id="${list.questionId}"
-                        th:name="${list.questionId}"
-                        th:value="${list.answerOne}"
-                        required
-                    />
-                     
-                    <label
-                        >A.
+                    <input type="radio" id="<%=i%>" name="<%=i%>" value="<%=list_question[i].answer_one%>" required />
+                    <label>A.
                         <span
                             style="font-weight: normal"
-                            th:text="${list.answerOne}"
-                        ></span></label
-                    ><br />
-                    <input
-                        type="radio"
-                        th:id="${list.questionId}"
-                        th:name="${list.questionId}"
-                        th:value="${list.answerTwo}"
-                    />
-                     
-                    <label
-                        >B.
+                            text=<%=list_question[i].answer_one%>
+                        ><%=list_question[i].answer_one%></span></label><br />
+                    <input type="radio" id="<%=i%>" name="<%=i%>" value=< %=list_question[i].answer_two%> />
+                    <label>B.
                         <span
                             style="font-weight: normal"
-                            th:text="${list.answerTwo}"
-                        ></span></label
-                    ><br />
-                    <input
-                        type="radio"
-                        th:id="${list.questionId}"
-                        th:name="${list.questionId}"
-                        th:value="${list.answerThree}"
-                    />
-                     
-                    <label
-                        >C.
+                            text="<%=list_question[i].answer_two%>"><%=list_question[i].answer_two%></span></label><br />
+                    <input type="radio" id="<%=i%>" name="<%=i%>" value="<%=list_question[i].answer_three%>" />
+                    <label>C.
                         <span
                             style="font-weight: normal"
-                            th:text="${list.answerThree}"
-                        ></span></label
-                    ><br />
-                    <input
-                        type="radio"
-                        th:id="${list.questionId}"
-                        th:name="${list.questionId}"
-                        th:value="${list.answerFour}"
-                    />
-                     
-                    <label
-                        >D.
+                            text="<%=list_question[i].answer_three%>"
+                        ><%=list_question[i].answer_three%></span></label><br />
+                    <input type="radio" id="<%=i%>" name="<%=i%>" value="<%=list_question[i].answer_four%>" />
+                    <label>D.
                         <span
                             style="font-weight: normal"
-                            th:text="${list.answerFour}"
-                        ></span></label
-                    ><br />
+                            text="<%=list_question[i].answer_four%>"><%=list_question[i].answer_four%></span></label><br />
                 </div>
-                <div
-                    style="
+                <%}%>
+                    <div style="
                         width: 25%;
                         max-width: 25%;
                         margin-left: 73%;
@@ -201,142 +152,116 @@
                         margin-top: 0%;
                         font-size: 20px;
                         background-color: white;
-                    "
-                    class="mydiv pull-left"
-                >
-                    <span>Thời gian còn lại </span>
-                    <label id="h">Giờ</label> : <label id="m">Phút</label> :
-                    <label id="s">Giây</label>
-                    <hr />
-                    <p>
-                        <a
-                            href="#"
-                            data-toggle="modal"
-                            data-target="#nopbai"
-                            class="btn btn-success center-block"
-                            style="
+                    " class="mydiv pull-left">
+                        <span>Thời gian còn lại </span>
+                        <label id="h">Giờ</label> : <label id="m">Phút</label> : <label id="s">Giây</label>
+                        <hr />
+                        <p>
+                            <input type="submit" data-toggle="modal" data-target="#nopbai" class="btn btn-success center-block" style="
                                 width: 100%;
                                 max-width: 100%;
                                 border-radius: 16px;
-                            "
-                            >Nộp bài</a
-                        >
-                    </p>
-                </div>
-            </div>
-            <br />
-        </form>
-        <div class="footer center-block">
-            <p style="padding: 5px">
-                Bản quyền của
-                <span style="color: #3276b1">Trường THPT Tam Phú</span> – Phát
-                triển bởi <span style="color: #3276b1">NTT&CDH</span> © 2022 -
-                2022
-                <span class="pull-right" style="color: green"
-                    >Version 0.0.1
-                </span>
-            </p>
+                            " value="Nộp bài" />
+                        </p>
+                    </div>
         </div>
-        <div class="modal fade" id="nopbai" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="form-group">
-                            <h3 class="modal-title">
-                                Nộp bài<button
-                                    type="button"
-                                    class="close pull-right"
-                                    data-dismiss="modal"
-                                >
+        <br />
+    </form>
+    <div class="footer center-block">
+        <p style="padding: 5px">
+            Bản quyền của
+            <span style="color: #3276b1">Trường THPT Tam Phú</span> – Phát triển bởi <span style="color: #3276b1">NTT&CDH</span> © 2022 - 2022
+            <span class="pull-right" style="color: green">Version 0.0.1
+                </span>
+        </p>
+    </div>
+    <div class="modal fade" id="nopbai" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h3 class="modal-title">
+                            Nộp bài<button type="button" class="close pull-right" data-dismiss="modal">
                                     &times;
                                 </button>
-                            </h3>
-                        </div>
+                        </h3>
                     </div>
-                    <div>
-                        <br />
-                        <p style="text-align: center">
-                            Hãy kiểm tra lại kỹ bài làm của bạn trước khi nộp
-                            bài
-                        </p>
-                        <p style="text-align: center">
-                            Bạn có chắc là muốn nộp bài ?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="btn-group">
-                            <p>
-                                <a
-                                    href="#"
-                                    class="btn btn-default"
-                                    data-dismiss="modal"
-                                    >Không</a
-                                >
-                                <a
-                                    href="#"
-                                    onclick="myfunction()"
-                                    class="btn btn-danger"
-                                    style="
+                </div>
+                <div>
+                    <br />
+                    <p style="text-align: center">
+                        Hãy kiểm tra lại kỹ bài làm của bạn trước khi nộp bài
+                    </p>
+                    <p style="text-align: center">
+                        Bạn có chắc là muốn nộp bài ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <p>
+                            <a class="btn btn-default" data-dismiss="modal">Không</a>
+                            <a href="#" onclick="myfunction()" class="btn btn-danger" style="
                                         padding-left: 23px;
                                         padding-right: 23px;
-                                    "
-                                    >Có</a
-                                >
-                            </p>
-                        </div>
+                                    ">Có</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <script language="javascript">
-            var h = null;
-            var m = null;
-            var s = null;
-            var timeout = null;
-            window.onload = function () {
-                start();
-            };
-            function start() {
-                if (h === null) {
-                    h = 0;
-                    m = parseInt(
-                        document.getElementById('testTimeLimit').value,
-                    );
-                    s = 0;
-                }
+    </div>
+    <script language="javascript">
+        var h = null;
+        var m = null;
+        var s = null;
+        var timeout = null;
+        window.onload = function() {
+            start();
+        };
 
-                if (s === -1) {
-                    m -= 1;
-                    s = 59;
-                }
-
-                if (m === -1) {
-                    h -= 1;
-                    m = 59;
-                }
-
-                if (h == -1) {
-                    clearTimeout(timeout);
-                    document.dotest.submit();
-                    return false;
-                }
-
-                document.getElementById('h').innerText = h.toString();
-                document.getElementById('m').innerText = m.toString();
-                document.getElementById('s').innerText = s.toString();
-
-                timeout = setTimeout(function () {
-                    s--;
-                    start();
-                }, 1000);
+        function start() {
+            if (h === null) {
+                h = 0;
+                m = parseInt(
+                    document.getElementById('test_time_limit').value,
+                );
+                s = 0;
             }
-            function stop() {
+
+            if (s === -1) {
+                m -= 1;
+                s = 59;
+            }
+
+            if (m === -1) {
+                h -= 1;
+                m = 59;
+            }
+
+            if (h == -1) {
                 clearTimeout(timeout);
+                document.dotest.submit();
+                return false;
             }
 
-            function myfunction() {
-                document.dotest.submit();
-            }
-        </script>
-    </body>
+            document.getElementById('h').innerText = h.toString();
+            document.getElementById('m').innerText = m.toString();
+            document.getElementById('s').innerText = s.toString();
+
+            timeout = setTimeout(function() {
+                s--;
+                start();
+            }, 1000);
+        }
+
+        function stop() {
+            clearTimeout(timeout);
+        }
+
+        function myfunction() {
+            document.dotest.submit();
+        }
+    </script>
+</body>
+
 </html>

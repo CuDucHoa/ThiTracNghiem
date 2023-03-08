@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsToMany(models.classes, { through: models.class_detail });
+            this.belongsToMany(models.test, { through: models.result });
         }
     }
     nguoidung.init({
@@ -28,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         nguoidung_address: DataTypes.STRING,
         nguoidung_gender: DataTypes.STRING,
         nguoidung_image: DataTypes.STRING,
-        nguoidung_state: DataTypes.BOOLEAN
+        nguoidung_state: DataTypes.TINYINT
     }, {
         sequelize,
         timestamps: false,

@@ -9,9 +9,6 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.BIGINT
             },
-            subject_id: {
-                type: Sequelize.BIGINT
-            },
             test_term: {
                 type: Sequelize.STRING
             },
@@ -28,7 +25,7 @@ module.exports = {
                 type: Sequelize.INTEGER
             },
             test_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             },
             test_grade: {
                 type: Sequelize.STRING

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsToMany(models.nguoidung, { through: models.class_detail });
         }
     }
     classes.init({
@@ -22,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
         },
         class_name: DataTypes.STRING,
         class_year: DataTypes.STRING,
-        class_state: DataTypes.BOOLEAN
+        class_grade: DataTypes.STRING,
+        class_state: DataTypes.TINYINT
     }, {
         sequelize,
         timestamps: false,

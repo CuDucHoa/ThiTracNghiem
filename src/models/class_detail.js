@@ -11,18 +11,16 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsTo(models.nguoidung);
+            this.belongsTo(models.classes);
         }
     }
     class_detail.init({
-        class_id: {
+        class_detail_id: {
             allowNull: false,
             primaryKey: true,
+            autoIncrement: true,
             type: DataTypes.BIGINT
-        },
-        nguoidung_id: {
-            allowNull: false,
-            primaryKey: true,
-            type: DataTypes.STRING
         }
     }, {
         sequelize,

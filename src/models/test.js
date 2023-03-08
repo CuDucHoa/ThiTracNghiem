@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsToMany(models.nguoidung, { through: models.result });
+            this.belongsToMany(models.question, { through: models.test_detail });
+            this.belongsTo(models.subject);
         }
     }
     test.init({
@@ -20,13 +23,12 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             type: DataTypes.BIGINT
         },
-        subject_id: DataTypes.BIGINT,
         test_term: DataTypes.STRING,
         test_date: DataTypes.DATEONLY,
         test_time_start: DataTypes.TIME,
         test_time_limit: DataTypes.INTEGER,
         test_quantity: DataTypes.INTEGER,
-        test_state: DataTypes.BOOLEAN,
+        test_state: DataTypes.TINYINT,
         test_grade: DataTypes.STRING
     }, {
         sequelize,

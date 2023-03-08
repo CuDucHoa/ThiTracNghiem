@@ -15,8 +15,11 @@ module.exports = {
             class_year: {
                 type: Sequelize.STRING
             },
+            class_grade: {
+                type: Sequelize.STRING
+            },
             class_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             }
         });
     },

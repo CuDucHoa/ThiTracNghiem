@@ -36,7 +36,7 @@ module.exports = {
                 type: Sequelize.STRING
             },
             nguoidung_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             }
         });
     },

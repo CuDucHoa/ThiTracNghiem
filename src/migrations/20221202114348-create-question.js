@@ -30,9 +30,6 @@ module.exports = {
             createby: {
                 type: Sequelize.STRING
             },
-            subject_id: {
-                type: Sequelize.BIGINT
-            },
             question_grade: {
                 type: Sequelize.STRING
             },
@@ -40,7 +37,7 @@ module.exports = {
                 type: Sequelize.STRING
             },
             question_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             }
         });
     },

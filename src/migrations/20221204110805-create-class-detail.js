@@ -3,15 +3,11 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('class_detail', {
-            class_id: {
+            class_detail_id: {
                 allowNull: false,
                 primaryKey: true,
+                autoIncrement: true,
                 type: Sequelize.BIGINT
-            },
-            nguoidung_id: {
-                allowNull: false,
-                primaryKey: true,
-                type: Sequelize.STRING
             }
         });
     },

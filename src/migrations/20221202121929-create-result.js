@@ -3,21 +3,17 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.createTable('result', {
-            nguoidung_id: {
+            result_id: {
                 allowNull: false,
                 primaryKey: true,
-                type: Sequelize.STRING
-            },
-            test_id: {
-                allowNull: false,
-                primaryKey: true,
+                autoIncrement: true,
                 type: Sequelize.BIGINT
             },
             users_score: {
                 type: Sequelize.FLOAT
             },
             test_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             },
             test_finish_time: {
                 type: Sequelize.DATE

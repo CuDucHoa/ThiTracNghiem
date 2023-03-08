@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.hasMany(models.test, { foreignKey: this.subject_id });
+            this.hasMany(models.question, { foreignKey: this.subject_id });
         }
     }
     subject.init({
@@ -21,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.BIGINT
         },
         subject_name: DataTypes.STRING,
-        subject_state: DataTypes.BOOLEAN
+        subject_state: DataTypes.TINYINT
     }, {
         sequelize,
         timestamps: false,

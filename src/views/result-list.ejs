@@ -1,220 +1,200 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" th:href="@{css/bootstrap.css}" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <title>Student Result List</title>
-        <style>
-            body {
-                font-family: Arial, Helvetica, sans-serif;
-            }
 
-            .ngubar {
-                overflow: hidden;
-                background-color: #333;
-            }
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <title>Student Result List</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        
+        .ngubar {
+            overflow: hidden;
+            background-color: #333;
+        }
+        
+        .ngubar a {
+            float: left;
+            font-size: 16px;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        .ngu {
+            float: left;
+            overflow: hidden;
+        }
+        
+        .ngu .ngubtn {
+            font-size: 16px;
+            border: none;
+            outline: none;
+            color: white;
+            padding: 14px 16px;
+            background-color: inherit;
+            font-family: inherit;
+            margin: 0;
+        }
+        
+        .ngubar a:hover,
+        .ngu:hover .ngubtn {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .ngu-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        
+        .ngu-content a {
+            float: none;
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
+        }
+        
+        .ngu-content a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        
+        .ngu:hover .ngu-content {
+            display: block;
+        }
+        
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #333;
+            color: white;
+            text-align: left;
+        }
+    </style>
+</head>
 
-            .ngubar a {
-                float: left;
-                font-size: 16px;
-                color: white;
-                text-align: center;
-                padding: 14px 16px;
-                text-decoration: none;
-            }
-
-            .ngu {
-                float: left;
-                overflow: hidden;
-            }
-
-            .ngu .ngubtn {
-                font-size: 16px;
-                border: none;
-                outline: none;
-                color: white;
-                padding: 14px 16px;
-                background-color: inherit;
-                font-family: inherit;
-                margin: 0;
-            }
-
-            .ngubar a:hover,
-            .ngu:hover .ngubtn {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .ngu-content {
-                display: none;
-                position: absolute;
-                background-color: #f9f9f9;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                z-index: 1;
-            }
-
-            .ngu-content a {
-                float: none;
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                text-align: left;
-            }
-
-            .ngu-content a:hover {
-                background-color: #ddd;
-                color: black;
-            }
-
-            .ngu:hover .ngu-content {
-                display: block;
-            }
-            .footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                background-color: #333;
-                color: white;
-                text-align: left;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="ngubar center-block">
-            <a
-                th:href="@{/home}"
-                style="font-weight: bold; background-color: #1e90ff"
-                >Tam Phú</a
+<body>
+    <div class="ngubar center-block">
+        <a href="/home" style="font-weight: bold; background-color: #1e90ff">Tam Phú</a
             >
-            <a th:href="@{/result-list}">Điểm số</a>
-            <a
-                href="#"
-                data-toggle="modal"
-                data-target="#logout"
-                class="pull-right"
-                ><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a
-            >
-            <a
-                th:href="@{/account-information}"
-                th:text="${userName}"
-                class="pull-right"
-            ></a>
+            <a href="/result-list">Điểm số</a>
+        <a href="/logout" data-toggle="modal" data-target="#logout" class="pull-right"><i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+        <a href="/account-information" text="<%=user_data.nguoidung_full_name%>" class="pull-right">
+            <%=user_data.nguoidung_full_name%>
+        </a>
+    </div>
+    <div style="padding-left: 16px">
+        <div class="center-block mydiv" style="width: 50%; max-width: 50%; font-size: 18px">
+            <p>
+                <label>Mã số học sinh : </label>
+                <span text="<%=user_data.nguoidung_id%>"><%=user_data.nguoidung_id%></span>
+            </p>
+            <p>
+                <label>Họ và tên : </label>
+                <span text="<%=user_data.nguoidung_full_name%>"><%=user_data.nguoidung_full_name%></span>
+            </p>
+            <p>
+                <label>Lớp : </label> <span text="<%=user_data.class_name%>"><%=user_data.class_name%></span>
+            </p>
         </div>
-        <div style="padding-left: 16px">
-            <div
-                class="center-block mydiv"
-                style="width: 50%; max-width: 50%; font-size: 18px"
-            >
-                <p>
-                    <label>Mã số học sinh : </label>
-                    <span th:text="${userId}"></span>
-                </p>
-                <p>
-                    <label>Họ và tên : </label>
-                    <span th:text="${userName}"></span>
-                </p>
-                <p>
-                    <label>Lớp : </label> <span th:text="${className}"></span>
-                </p>
-            </div>
-            <table class="table-hover table table-responsive tr">
-                <caption class="caption">
-                    Điểm số các bài kiểm tra
-                </caption>
-                <thead>
-                    <tr>
-                        <th scope="row">Môn</th>
-                        <th scope="row">Học kỳ</th>
-                        <th scope="row">Năm</th>
-                        <th scope="row">Khối lớp</th>
-                        <th scope="row">Điểm số</th>
-                        <th></th>
+        <table class="table-hover table table-responsive tr">
+            <caption class="caption">
+                Điểm số các bài kiểm tra
+            </caption>
+            <thead>
+                <tr>
+                    <th scope="row">Môn</th>
+                    <th scope="row">Học kỳ</th>
+                    <th scope="row">Thời gian</th>
+                    <th scope="row">Khối lớp</th>
+                    <th scope="row">Điểm số</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var i=0;i<list_result.length;i++){%>
+                    <tr class="search-list">
+                        <td text="<%=list_result[i].subject_id%>">
+                            <%=list_result[i].subject_id%>
+                        </td>
+                        <td text="<%=list_result[i].test_term%>">
+                            <%=list_result[i].test_term%>
+                        </td>
+                        <td text="<%=list_result[i].test_date%>">
+                            <%=list_result[i].test_date%>
+                        </td>
+                        <td text="<%=list_result[i].test_grade%>">
+                            <%=list_result[i].test_grade%>
+                        </td>
+                        <td text="<%=list_result[i].users_score%>">
+                            <%=list_result[i].users_score%>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="list : ${listResult}" class="search-list">
-                        <td th:text="${list.subject_name}"></td>
-                        <td th:text="${list.test_term}"></td>
-                        <td
-                            th:text="${#dates.format(list.test_date, 'yyyy')}"
-                        ></td>
-                        <td th:text="${list.test_grade}"></td>
-                        <td th:text="${list.users_score}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <div class="modal fade" id="logout" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <div class="form-group">
-                            <h3 class="modal-title">
-                                Đăng xuất<button
-                                    type="button"
-                                    class="close pull-right"
-                                    data-dismiss="modal"
-                                >
+                    <%}%>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div class="modal fade" id="logout" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h3 class="modal-title">
+                            Đăng xuất<button type="button" class="close pull-right" data-dismiss="modal">
                                     &times;
                                 </button>
-                            </h3>
-                        </div>
+                        </h3>
                     </div>
-                    <div>
-                        <br />
-                        <p style="text-align: center">
-                            Bạn có chắc là muốn đăng xuất ?
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <div class="btn-group">
-                            <p>
-                                <a
-                                    href="#"
-                                    class="btn btn-default"
-                                    data-dismiss="modal"
-                                    >Không</a
-                                >
-                                <a
-                                    th:href="@{/logout}"
-                                    class="btn btn-danger"
-                                    style="
+                </div>
+                <div>
+                    <br />
+                    <p style="text-align: center">
+                        Bạn có chắc là muốn đăng xuất ?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <p>
+                            <a class="btn btn-default" data-dismiss="modal">Không</a>
+                            <a href="/logout" class="btn btn-danger" style="
                                         padding-left: 23px;
                                         padding-right: 23px;
-                                    "
-                                    >Có</a
-                                >
-                            </p>
-                        </div>
+                                    ">Có</a>
+                        </p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="footer center-block">
-            <p style="padding: 5px">
-                Bản quyền của
-                <span style="color: #3276b1">Trường THPT Tam Phú</span> – Phát
-                triển bởi <span style="color: #3276b1">NTT&CDH</span> © 2022 -
-                2022
-                <span class="pull-right" style="color: green"
-                    >Version 0.0.1
+    </div>
+    <div class="footer center-block">
+        <p style="padding: 5px">
+            Bản quyền của
+            <span style="color: #3276b1">Trường THPT Tam Phú</span> – Phát triển bởi <span style="color: #3276b1">NTT&CDH</span> © 2022 - 2022
+            <span class="pull-right" style="color: green">Version 0.0.1
                 </span>
-            </p>
-        </div>
-    </body>
+        </p>
+    </div>
+</body>
+
 </html>

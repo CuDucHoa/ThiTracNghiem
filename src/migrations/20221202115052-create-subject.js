@@ -13,7 +13,7 @@ module.exports = {
                 type: Sequelize.STRING
             },
             subject_state: {
-                type: Sequelize.BOOLEAN
+                type: Sequelize.TINYINT
             }
         });
     },

@@ -11,17 +11,15 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsTo(models.test);
+            this.belongsTo(models.question);
         }
     }
     test_detail.init({
-        test_id: {
+        test_detail_id: {
             allowNull: false,
             primaryKey: true,
-            type: DataTypes.BIGINT
-        },
-        question_id: {
-            allowNull: false,
-            primaryKey: true,
+            autoIncrement: true,
             type: DataTypes.BIGINT
         }
     }, {

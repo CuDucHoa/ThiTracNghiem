@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
          */
         static associate(models) {
             // define association here
+            this.belongsToMany(models.test, { through: models.test_detail });
+            this.belongsTo(models.subject);
         }
     }
     question.init({
@@ -27,10 +29,9 @@ module.exports = (sequelize, DataTypes) => {
         answer_four: DataTypes.STRING,
         answer_correct: DataTypes.STRING,
         createby: DataTypes.STRING,
-        subject_id: DataTypes.BIGINT,
         question_grade: DataTypes.STRING,
         question_term: DataTypes.STRING,
-        question_state: DataTypes.BOOLEAN
+        question_state: DataTypes.TINYINT
     }, {
         sequelize,
         timestamps: false,
